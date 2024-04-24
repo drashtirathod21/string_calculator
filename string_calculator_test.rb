@@ -34,5 +34,6 @@ class StringCalculatorTest < Minitest::Test
 
   def test_invalid_input_comma_followed_by_new_line
     assert_raises(ArgumentError) { @calculator.add("1,\n") }
+    assert_raises(ArgumentError) { @calculator.add("1, \n, 2") }
   end
 end
