@@ -27,4 +27,12 @@ class StringCalculatorTest < Minitest::Test
   def test_numbers_with_spaces
     assert_equal 10, @calculator.add("1,  2, 3, 4")
   end
+
+  def test_new_lines_between_numbers
+    assert_equal 6, @calculator.add("1\n2,3")
+  end
+
+  def test_invalid_input_comma_followed_by_new_line
+    assert_raises(ArgumentError) { @calculator.add("1,\n") }
+  end
 end
