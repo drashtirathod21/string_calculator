@@ -36,4 +36,15 @@ class StringCalculatorTest < Minitest::Test
     assert_raises(ArgumentError) { @calculator.add("1,\n") }
     assert_raises(ArgumentError) { @calculator.add("1, \n, 2") }
   end
+
+  def test_custom_delimiter
+    assert_equal 3, @calculator.add("//;\n1;2")
+    assert_equal 6, @calculator.add("//|\n1|2|3")
+    assert_equal 5, @calculator.add("//sep\n2sep3")
+  end
+
+  def test_invalid_custom_delimiter
+    exception = assert_raises(ArgumentError) { @calculator.add("//|\n1|2,3") }
+    assert_equal "'|' expected but ',' found at position 3.", exception.message
+  end
 end
