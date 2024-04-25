@@ -47,4 +47,24 @@ class StringCalculatorTest < Minitest::Test
     exception = assert_raises(ArgumentError) { @calculator.add("//|\n1|2,3") }
     assert_equal "'|' expected but ',' found at position 3.", exception.message
   end
+
+  def test_negative_number
+    error = assert_raises(ArgumentError) { @calculator.add("-1,2") }
+    assert_equal "Negative numbers not allowed: -1", error.message
+  end
+
+  def test_multiple_negative_numbers
+    error = assert_raises(ArgumentError) { @calculator.add("2,-4,-5") }
+    assert_equal "Negative numbers not allowed: -4, -5", error.message
+  end
+
+  def test_negative_number_with_delimiter
+    error = assert_raises(ArgumentError) { @calculator.add("//;\n1;-2;3") }
+    assert_equal "Negative numbers not allowed: -2", error.message
+  end
+
+  def test_multiple_negative_numbers_with_delimiter
+    error = assert_raises(ArgumentError) { @calculator.add("//|\n1|-2,3,-4") }
+    assert_equal "Negative numbers not allowed: -2, -4", error.message
+  end
 end
